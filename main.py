@@ -1,22 +1,40 @@
 class ProductManager:
-    def __init__(self):
-        self.products = []
+ from product import Product
+from cart import Cart # Dodaj ovaj import
 
-    def add_product(self, product):
-        self.products.append(product)
-        print(f"Dodat proizvod: {product.name}")
+# ... tvoj postojeći ProductManager ostaje isti ...
 
-    # --- OVDE DODAJ NOVI METOD ---
-    def remove_product(self, product_name):
-        """Uklanja proizvod iz liste na osnovu imena."""
-        original_count = len(self.products)
-        # Filtriramo listu tako da zadržimo sve OSIM onog koji brišemo
-        self.products = [p for p in self.products if p.name.lower() != product_name.lower()]
-        
-        if len(self.products) < original_count:
-            print(f"Proizvod '{product_name}' je uspešno uklonjen.")
-        else:
-            print(f"Proizvod '{product_name}' nije pronađen.")
+if __name__ == "__main__":
+    # Inicijalizacija managera i proizvoda
+    manager = ProductManager()
+    p1 = Product("Laptop", 75000, 5)
+    p2 = Product("Miš", 3200, 10)
+    p3 = Product("Tastatura", 4500, 8)
+    
+    manager.add_product(p1)
+    manager.add_product(p2)
+    manager.add_product(p3)
 
-    def display_all_products(self):
-        # ... ostatak koda ...
+    # NOVO: Kreiranje instance Cart
+    moja_korpa = Cart()
+
+    # Dodavanje proizvoda u korpu (simulacija kupovine)
+    moja_korpa.add_to_cart(p1, 1) # 1 Laptop
+    moja_korpa.add_to_cart(p2, 2) # 2 Miša
+    moja_korpa.add_to_cart(p3, 1) # 1 Tastatura
+
+    # Prikaz korpe i naplata
+    moja_korpa.display_cart()
+    print(f"Ukupan iznos za naplatu: {moja_korpa.calculate_total():.2f} RSD")
+    
+    # Provera preostalih zaliha nakon kupovine
+    manager.display_all_products()
+if __name__ == "__main__":
+    manager = ProductManager()
+    p1 = Product("Felna", 12000, 4) # Promijenjeno
+    p2 = Product("Ulje", 1500, 10)   # Promijenjeno
+    
+    manager.add_product(p1)
+    manager.add_product(p2)
+    
+    # Ovdje su obrisane linije za prikaz inventara
